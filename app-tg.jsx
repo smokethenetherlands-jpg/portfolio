@@ -14,8 +14,8 @@ const AppTG = () => {
 
   return (
     <div style={{ width: '100%', height: '100svh', position: 'relative', background: '#0a0a0a', overflow: 'hidden' }}>
-      <TGHeader title={title} dark={true} lang={lang} setLang={setLang} onClose={() => tg?.close()} />
-      <VariantB2 lang={lang} accent={accent} />
+      <TGHeader title={title} dark={true} lang={lang} setLang={setLang} onClose={() => tg?.close()} paddingTop={12} solid={true} />
+      <VariantB2 lang={lang} accent={accent} headerHeight={52} />
     </div>
   );
 };

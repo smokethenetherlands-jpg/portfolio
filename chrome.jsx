@@ -22,17 +22,19 @@ const Icon = ({ name, size = 20, stroke = 1.5, color = 'currentColor' }) => {
 };
 
 // TG mini-app top bar — back chevron, centered title, close X. Liquid-glass haircut.
-const TGHeader = ({ title, dark = true, lang, setLang, onClose }) => {
+const TGHeader = ({ title, dark = true, lang, setLang, onClose, paddingTop = 56, solid = false }) => {
   const fg = dark ? '#fafafa' : '#0a0a0a';
   const sub = dark ? 'rgba(250,250,250,0.55)' : 'rgba(10,10,10,0.55)';
   return (
     <div style={{
       position: 'absolute', top: 0, left: 0, right: 0, zIndex: 30,
-      paddingTop: 56, paddingLeft: 14, paddingRight: 14, paddingBottom: 6,
+      paddingTop, paddingLeft: 14, paddingRight: 14, paddingBottom: 6,
       display: 'flex', alignItems: 'center', gap: 8,
-      background: dark
-        ? 'linear-gradient(to bottom, rgba(10,10,10,0.92) 60%, rgba(10,10,10,0))'
-        : 'linear-gradient(to bottom, rgba(245,245,245,0.92) 60%, rgba(245,245,245,0))',
+      background: solid
+        ? (dark ? 'rgba(10,10,10,1)' : 'rgba(245,245,245,1)')
+        : (dark
+          ? 'linear-gradient(to bottom, rgba(10,10,10,0.92) 60%, rgba(10,10,10,0))'
+          : 'linear-gradient(to bottom, rgba(245,245,245,0.92) 60%, rgba(245,245,245,0))'),
       backdropFilter: 'blur(14px) saturate(160%)',
       WebkitBackdropFilter: 'blur(14px) saturate(160%)',
     }}>

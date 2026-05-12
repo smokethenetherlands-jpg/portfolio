@@ -5,7 +5,7 @@
 // - Side rail with section numerals that highlight as you scroll.
 // - Horizontal-scroll project shelf (snap), with index/total counter.
 
-const VariantB2 = ({ lang, accent }) => {
+const VariantB2 = ({ lang, accent, headerHeight = 96 }) => {
   const p = window.PORTFOLIO; const T = window.T; const tx = window.tx;
   const scrollRef = React.useRef(null);
   const [section, setSection] = React.useState(1);
@@ -44,7 +44,7 @@ const VariantB2 = ({ lang, accent }) => {
     }}>
       {/* Top scroll-progress bar (right under TG header) */}
       <div style={{
-        position: 'absolute', top: 90, left: 0, right: 0, height: 2, zIndex: 22,
+        position: 'absolute', top: headerHeight - 2, left: 0, right: 0, height: 2, zIndex: 22,
         background: 'rgba(250,250,250,0.08)',
       }}>
         <div style={{
@@ -86,7 +86,7 @@ const VariantB2 = ({ lang, accent }) => {
 
       <div ref={scrollRef} style={{
         position: 'absolute', inset: 0, overflowY: 'auto', overflowX: 'hidden',
-        paddingTop: 96, paddingBottom: 110, paddingRight: 8,
+        paddingTop: headerHeight, paddingBottom: 110, paddingRight: 8,
       }}>
         {/* HERO */}
         <SectionB2 n={1} of={total} title={null}>
