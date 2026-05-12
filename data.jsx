@@ -123,8 +123,8 @@ const PORTFOLIO = {
   ],
 
   experience: [
-    { co: 'memQR', role: { ru: 'Founder · всё сам', en: 'Founder · solo' }, dates: { ru: '2025 — сейчас', en: '2025 — present' }, loc: { ru: 'Россия', en: 'Russia' } },
-    { co: 'Indie projects', role: { ru: 'Sole developer', en: 'Sole developer' }, dates: { ru: '2026 — сейчас', en: '2026 — present' }, loc: { ru: 'Удалённо', en: 'Remote' } },
+    { co: 'memQR', role: { ru: 'Founder · всё сам', en: 'Founder · solo' }, dates: { ru: '2025 —', en: '2025 —' }, loc: { ru: 'Россия', en: 'Russia' } },
+    { co: 'Indie projects', role: { ru: 'Sole developer', en: 'Sole developer' }, dates: { ru: '2026 —', en: '2026 —' }, loc: { ru: 'Удалённо', en: 'Remote' } },
   ],
 
   blog: [

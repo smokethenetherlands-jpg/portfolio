@@ -240,7 +240,7 @@ const VariantB2 = ({ lang, accent }) => {
               }}>
                 <div className="vb2-eyebrow">{c.k}</div>
                 <div style={{ fontFamily: 'Instrument Serif, serif', fontSize: 22 }}>
-                  {c.v} <span style={{ color: 'rgba(250,250,250,0.4)', marginLeft: 4 }}>↗</span>
+                  {c.v}
                 </div>
               </a>
             ))}
