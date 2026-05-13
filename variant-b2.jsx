@@ -5,11 +5,92 @@
 // - Side rail with section numerals that highlight as you scroll.
 // - Horizontal-scroll project shelf (snap), with index/total counter.
 
+const ProjectDetail = ({ project, lang, accent, onBack }) => {
+  const tx = window.tx;
+
+  React.useEffect(() => {
+    const tg = window.Telegram?.WebApp;
+    if (tg?.BackButton) {
+      tg.BackButton.show();
+      tg.BackButton.onClick(onBack);
+      return () => {
+        tg.BackButton.hide();
+        tg.BackButton.offClick(onBack);
+      };
+    }
+  }, [onBack]);
+
+  return (
+    <div style={{
+      position: 'absolute', inset: 0, zIndex: 80,
+      background: '#0a0a0a', color: '#fafafa',
+      fontFamily: 'Geist, system-ui, sans-serif',
+      overflowY: 'auto', overflowX: 'hidden',
+      animation: 'vb2-slide-in 0.32s cubic-bezier(.2,.8,.2,1)',
+    }}>
+      {/* Art header */}
+      <div style={{
+        height: 220, position: 'relative', overflow: 'hidden', flexShrink: 0,
+        background: `linear-gradient(135deg, oklch(0.30 0.05 ${project.hue}), oklch(0.18 0.04 ${project.hue + 30}))`,
+      }}>
+        <div style={{
+          position: 'absolute', inset: 0,
+          backgroundImage: `repeating-linear-gradient(45deg, rgba(255,255,255,0.04) 0 1px, transparent 1px 14px)`,
+        }} />
+        <button onClick={onBack} style={{
+          position: 'absolute', top: 16, left: 16, zIndex: 10,
+          width: 36, height: 36, borderRadius: 18,
+          background: 'rgba(0,0,0,0.45)', border: 'none', cursor: 'pointer',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)',
+        }}>
+          <Icon name="back" size={18} color="#fafafa" />
+        </button>
+        <div style={{ position: 'absolute', bottom: 20, left: 22, right: 22 }}>
+          <div style={{ fontFamily: 'Geist Mono, monospace', fontSize: 10, letterSpacing: 0.8, color: 'rgba(255,255,255,0.55)', marginBottom: 6 }}>
+            {project.year}
+          </div>
+          <div style={{
+            fontFamily: 'Instrument Serif, serif', fontWeight: 400,
+            fontSize: 44, lineHeight: 0.95, letterSpacing: -1.5,
+          }}>{project.name}</div>
+        </div>
+      </div>
+
+      {/* Content */}
+      <div style={{ padding: '24px 22px 60px' }}>
+        <div style={{ fontFamily: 'Geist Mono, monospace', fontSize: 10, letterSpacing: 0.5, color: 'rgba(250,250,250,0.5)', textTransform: 'uppercase', marginBottom: 16 }}>
+          {tx(project.role, lang)}
+        </div>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 24 }}>
+          {project.tags.map(tag => (
+            <span key={tag} style={{
+              fontFamily: 'Geist Mono, monospace', fontSize: 11,
+              padding: '4px 10px', borderRadius: 6,
+              background: `oklch(0.22 0.04 ${project.hue})`,
+              color: `oklch(0.78 0.12 ${project.hue})`,
+              letterSpacing: 0.3,
+            }}>{tag}</span>
+          ))}
+        </div>
+        <div style={{ height: 1, background: 'rgba(250,250,250,0.1)', marginBottom: 24 }} />
+        <div style={{
+          fontFamily: 'Instrument Serif, serif', fontStyle: 'italic',
+          fontSize: 21, lineHeight: 1.5, color: 'rgba(250,250,250,0.9)',
+        }}>
+          {tx(project.desc, lang)}
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const VariantB2 = ({ lang, accent, headerHeight = 96 }) => {
   const p = window.PORTFOLIO; const T = window.T; const tx = window.tx;
   const scrollRef = React.useRef(null);
   const [section, setSection] = React.useState(1);
   const [progress, setProgress] = React.useState(0); // 0..1 overall
+  const [selectedProject, setSelectedProject] = React.useState(null);
   const total = 7;
 
   React.useEffect(() => {
@@ -166,7 +247,7 @@ const VariantB2 = ({ lang, accent, headerHeight = 96 }) => {
 
         {/* WORK — horizontal scroll shelf */}
         <SectionB2 n={4} of={total} title={tx(T.selectedWork, lang)} accent={accent}>
-          <HorizontalShelf items={p.projects} lang={lang} accent={accent} />
+          <HorizontalShelf items={p.projects} lang={lang} accent={accent} onSelect={setSelectedProject} />
         </SectionB2>
 
         {/* ACHIEVEMENTS */}
@@ -260,10 +341,16 @@ const VariantB2 = ({ lang, accent, headerHeight = 96 }) => {
       {/* Floating section-jump tabbar */}
       <B2SectionTabbar section={section} jumpTo={jumpTo} accent={accent} />
 
+      {/* Project detail overlay */}
+      {selectedProject && (
+        <ProjectDetail project={selectedProject} lang={lang} accent={accent} onBack={() => setSelectedProject(null)} />
+      )}
+
       <style>{`
         .vb2-root .vb2-eyebrow { font-family: 'Geist Mono', ui-monospace, monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(250,250,250,0.5); }
         @keyframes vb2-progress { 0% { transform: translateX(-100%); } 100% { transform: translateX(280px); } }
         @keyframes vb2-grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+        @keyframes vb2-slide-in { from { transform: translateX(100%); } to { transform: translateX(0); } }
       `}</style>
     </div>
   );
@@ -313,7 +400,7 @@ const SectionB2 = ({ n, of, title, children, accent }) => (
 );
 
 // Horizontal scrolling project shelf with index/total counter
-const HorizontalShelf = ({ items, lang, accent }) => {
+const HorizontalShelf = ({ items, lang, accent, onSelect }) => {
   const tx = window.tx;
   const ref = React.useRef(null);
   const [idx, setIdx] = React.useState(0);
@@ -369,8 +456,8 @@ const HorizontalShelf = ({ items, lang, accent }) => {
         scrollbarWidth: 'none',
       }}>
         {items.map((pr, i) => (
-          <div key={pr.id} style={{
-            flexShrink: 0, width: 260, scrollSnapAlign: 'start',
+          <div key={pr.id} onClick={() => onSelect && onSelect(pr)} style={{
+            flexShrink: 0, width: 260, scrollSnapAlign: 'start', cursor: 'pointer',
           }}>
             <ProjectArt hue={pr.hue} h={200} label={`${pr.name} · ${pr.year}`} />
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginTop: 10 }}>

@@ -46,16 +46,16 @@ const PORTFOLIO = {
       hue: 200,
     },
     {
-      id: 'booking-bot',
-      name: 'Booking Bot',
+      id: 'healthbridge',
+      name: 'HealthBridge',
       year: 2025,
-      role: { ru: 'Fullstack-разработчик', en: 'Fullstack Developer' },
-      tags: ['Python', 'FastAPI', 'PostgreSQL'],
+      role: { ru: 'iOS-разработчик', en: 'iOS Developer' },
+      tags: ['Swift', 'HealthKit', 'Telegram'],
       desc: {
-        ru: 'Telegram-бот для записи клиентов с admin-панелью на FastAPI. Управление расписанием, уведомления, Google Calendar API. Стек: aiogram, SQLAlchemy, PostgreSQL, APScheduler.',
-        en: 'Telegram booking bot with FastAPI admin panel. Schedule management, notifications, Google Calendar API. Stack: aiogram, SQLAlchemy, PostgreSQL, APScheduler.',
+        ru: 'iOS-приложение для мониторинга здоровья: читает шаги, пульс, калории и сон из HealthKit, отправляет дневную сводку в Telegram.',
+        en: 'iOS health monitoring app: reads steps, heart rate, calories and sleep from HealthKit, sends daily summary to Telegram.',
       },
-      hue: 140,
+      hue: 350,
     },
     {
       id: 'avito-watcher',
