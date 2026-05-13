@@ -31,12 +31,12 @@ const ProjectDetail = ({ project, lang, accent, onBack }) => {
       {/* Art header */}
       <div style={{
         height: 220, position: 'relative', overflow: 'hidden', flexShrink: 0,
-        background: `linear-gradient(135deg, oklch(0.30 0.05 ${project.hue}), oklch(0.18 0.04 ${project.hue + 30}))`,
+        background: project.img ? '#111' : `linear-gradient(135deg, oklch(0.30 0.05 ${project.hue}), oklch(0.18 0.04 ${project.hue + 30}))`,
       }}>
-        <div style={{
-          position: 'absolute', inset: 0,
-          backgroundImage: `repeating-linear-gradient(45deg, rgba(255,255,255,0.04) 0 1px, transparent 1px 14px)`,
-        }} />
+        {project.img
+          ? <img src={project.img} alt={project.name} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }} />
+          : <div style={{ position: 'absolute', inset: 0, backgroundImage: `repeating-linear-gradient(45deg, rgba(255,255,255,0.04) 0 1px, transparent 1px 14px)` }} />
+        }
         <button onClick={onBack} style={{
           position: 'absolute', top: 16, left: 16, zIndex: 10,
           width: 36, height: 36, borderRadius: 18,
@@ -459,7 +459,7 @@ const HorizontalShelf = ({ items, lang, accent, onSelect }) => {
           <div key={pr.id} onClick={() => onSelect && onSelect(pr)} style={{
             flexShrink: 0, width: 260, scrollSnapAlign: 'start', cursor: 'pointer',
           }}>
-            <ProjectArt hue={pr.hue} h={200} label={`${pr.name} · ${pr.year}`} />
+            <ProjectArt hue={pr.hue} h={200} label={`${pr.name} · ${pr.year}`} src={pr.img || null} />
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginTop: 10 }}>
               <span style={{ fontFamily: 'Instrument Serif, serif', fontSize: 24, letterSpacing: -0.5 }}>{pr.name}</span>
               <span className="vb2-eyebrow" style={{ fontSize: 9 }}>{pr.year}</span>

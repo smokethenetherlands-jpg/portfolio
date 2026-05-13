@@ -44,6 +44,7 @@ const PORTFOLIO = {
         en: 'Client booking automation: AI admin collects data, confirms appointments, sends reminders, updates statuses. Stack: Telegram Bot, n8n, Google Sheets, Google Calendar.',
       },
       hue: 200,
+      img: 'img-ai.jpg',
     },
     {
       id: 'healthbridge',
@@ -56,6 +57,7 @@ const PORTFOLIO = {
         en: 'iOS health monitoring app: reads steps, heart rate, calories and sleep from HealthKit, sends daily summary to Telegram.',
       },
       hue: 350,
+      img: 'img-healthbridge.png',
     },
     {
       id: 'avito-watcher',
@@ -80,6 +82,7 @@ const PORTFOLIO = {
         en: 'Interactive family tree web app with custom relationship visualization. UI/UX, generational logic, responsiveness, visual effects.',
       },
       hue: 260,
+      img: 'img-familytree.jpg',
     },
     {
       id: 'memqr',

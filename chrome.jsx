@@ -203,22 +203,23 @@ const Reveal = ({ children, delay = 0, y = 12, dur = 500 }) => {
   );
 };
 
-// Project visual placeholder — striped, subtle, on hue
-const ProjectArt = ({ hue = 200, label, h = 140 }) => (
+// Project visual — supports optional image src, falls back to gradient
+const ProjectArt = ({ hue = 200, label, h = 140, src = null }) => (
   <div style={{
     height: h, borderRadius: 12, position: 'relative', overflow: 'hidden',
-    background: `linear-gradient(135deg, oklch(0.30 0.05 ${hue}), oklch(0.18 0.04 ${hue + 30}))`,
+    background: src ? '#111' : `linear-gradient(135deg, oklch(0.30 0.05 ${hue}), oklch(0.18 0.04 ${hue + 30}))`,
     display: 'flex', alignItems: 'flex-end', padding: 12,
   }}>
+    {src
+      ? <img src={src} alt={label} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }} />
+      : <div style={{ position: 'absolute', inset: 0, backgroundImage: `repeating-linear-gradient(45deg, rgba(255,255,255,0.04) 0 1px, transparent 1px 14px)` }} />
+    }
     <div style={{
-      position: 'absolute', inset: 0,
-      backgroundImage: `repeating-linear-gradient(45deg, rgba(255,255,255,0.04) 0 1px, transparent 1px 14px)`,
-    }} />
-    <div style={{
-      position: 'relative',
+      position: 'relative', zIndex: 1,
       fontFamily: 'Geist Mono, monospace',
       fontSize: 9, letterSpacing: 1, textTransform: 'uppercase',
-      color: 'rgba(255,255,255,0.55)',
+      color: 'rgba(255,255,255,0.75)',
+      textShadow: '0 1px 4px rgba(0,0,0,0.8)',
     }}>{label}</div>
   </div>
 );
