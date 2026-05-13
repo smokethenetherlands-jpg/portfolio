@@ -44,7 +44,7 @@ const PORTFOLIO = {
         en: 'Client booking automation: AI admin collects data, confirms appointments, sends reminders, updates statuses. Stack: Telegram Bot, n8n, Google Sheets, Google Calendar.',
       },
       hue: 200,
-      img: 'img-ai.jpg',
+      img: 'Screenshot_11.png',
     },
     {
       id: 'healthbridge',
